@@ -1,4 +1,7 @@
 # FreshSync Grocery Management
+login = 
+  admin@freshsync.com
+  admin123
 
 FreshSync is a grocery store management app with:
 
