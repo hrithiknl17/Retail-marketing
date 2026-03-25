@@ -1,27 +1,54 @@
 # FreshSync Grocery Management
 
-This repository is now split into two app directories:
+FreshSync is a grocery store management app with:
 
-- `frontend/`: Vite + React client
-- `backend/`: FastAPI + Supabase API
+- a `frontend` built with Vite + React
+- a `backend` built with FastAPI
+- Supabase for auth and data
+- Gemini for the AI assistant
+
+Live app:
+- Frontend: https://retail-marketing.nlhrithik123.workers.dev/
+- Backend: https://retail-marketing.onrender.com/
+
+## What It Does
+
+- Sign in and sign up with Supabase
+- View a live dashboard with revenue, stock alerts, and deliveries
+- Manage inventory and product stock
+- View vendors and deliveries
+- Use a billing POS to create sales
+- Ask the AI assistant questions about sales, inventory, and deliveries
+
+## Screenshots
+
+### Inventory
+
+![Inventory](docs/images/inventory.png)
+
+### Billing POS
+
+![Billing POS](docs/images/billing-pos.png)
 
 ## Project Structure
 
-Frontend:
-- `frontend/src`
-- `frontend/public`
-- `frontend/index.html`
-- `frontend/package.json`
+```text
+Retail-marketing/
+|- frontend/   # Vite + React app
+|- backend/    # FastAPI API
+`- docs/images # README screenshots
+```
 
-Backend:
-- `backend/main.py`
-- `backend/requirements.txt`
-- `backend/seed_supabase.py`
-- `backend/seed_more_supabase.py`
+## How The Flow Works
 
-## Run Locally
+1. The frontend calls the backend through `frontend/src/api.ts`.
+2. The backend handles auth and data access in `backend/main.py`.
+3. Supabase stores users, products, customers, vendors, deliveries, and sales.
+4. The AI assistant reads live store data from the backend and answers questions.
 
-Open two terminals from the repo root.
+## Run It Locally
+
+Open 2 terminals from the project root.
 
 Frontend:
 
@@ -31,7 +58,11 @@ npm install
 npm run dev
 ```
 
-Frontend runs at `http://localhost:3000`.
+Frontend runs on:
+
+```text
+http://localhost:3000
+```
 
 Backend:
 
@@ -41,31 +72,49 @@ python -m pip install -r requirements.txt
 python -m uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
-Backend runs at `http://localhost:8000`.
+Backend runs on:
+
+```text
+http://localhost:8000
+```
 
 ## Environment Variables
 
-Backend needs:
-- `SUPABASE_URL`
-- `SUPABASE_KEY`
-- `GEMINI_API_KEY` (optional, for AI Assistant)
-- `APP_TIMEZONE` (optional, defaults to `Asia/Kolkata`)
+Backend `.env`:
 
-Frontend can use:
-- `VITE_API_URL`
+```env
+SUPABASE_URL=your_supabase_url
+SUPABASE_KEY=your_supabase_service_role_key
+GEMINI_API_KEY=your_gemini_api_key
+APP_TIMEZONE=Asia/Kolkata
+```
 
-For local development, the frontend already defaults to `http://localhost:8000/api` if `VITE_API_URL` is not set.
+Frontend `.env`:
 
-## Deployment
+```env
+VITE_API_URL=http://localhost:8000/api
+```
 
-Vercel:
-- deploy `frontend/`
-- build command: `npm run build`
-- output directory: `dist`
-- set `VITE_API_URL` to your deployed backend URL plus `/api`
+Important:
+- keep secrets only in `backend/.env`
+- do not put secret keys in the frontend
 
-Render:
-- deploy `backend/`
+## Deploy
+
+Frontend:
+- Cloudflare Workers/Pages
+- root path: `frontend`
+- build command: `npm install && npm run build`
+
+Backend:
+- Render
+- root path: `backend`
 - build command: `pip install -r requirements.txt`
 - start command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
-- set backend environment variables in Render
+
+## Demo Login
+
+```text
+admin@freshsync.com / admin123
+customer@freshsync.com / customer123
+```
