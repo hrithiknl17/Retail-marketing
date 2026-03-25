@@ -1,6 +1,9 @@
 import type { UserRole } from './types';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+const DEFAULT_PRODUCTION_API_URL = 'https://retail-marketing.onrender.com/api';
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV ? 'http://localhost:8000/api' : DEFAULT_PRODUCTION_API_URL);
 export const DATA_CHANGED_EVENT = 'freshsync:data-changed';
 
 export interface AuthUser {
